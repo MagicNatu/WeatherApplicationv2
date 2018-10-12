@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+</head>
+
+<body> <h1>Current temperatures</h1> {{ range $key, $value := . }}
+        <li><strong> The temperature for {{ $key }} is: {{ $value.Main.CurrentTemp }} degrees celcius
+            {{if (and (eq $value.Userminmax.Usermax 0.00) (eq $value.Userminmax.Usermin 0.00))}}
+            {{else if (and (gt $value.Userminmax.Usermin $value.Main.CurrentTemp) (and (eq $value.Userminmax.Usermax 0.00) (gt $value.Userminmax.Usermin 0.00)))}}&emsp; <font color= "red">Warning!! </font> current temp is lower than specified {{$value.Userminmax.Usermin}} degrees
+            {{else if (and (gt $value.Userminmax.Usermin $value.Main.CurrentTemp) (and (eq $value.Userminmax.Usermax 0.00) (gt $value.Userminmax.Usermin -30.00)))}} &emsp; <font color= "red">Warning!! </font> current temp is lower than specified {{$value.Userminmax.Usermin}}
+            {{else if (and (lt $value.Userminmax.Usermin $value.Main.CurrentTemp) (and (eq $value.Userminmax.Usermax 0.00) (gt $value.Userminmax.Usermin 0.00)))}}
+            {{else if (and (lt $value.Userminmax.Usermin $value.Main.CurrentTemp) (and (eq $value.Userminmax.Usermax 0.00) (gt $value.Userminmax.Usermin -30.00)))}} 
+                {{else if lt $value.Userminmax.Usermax $value.Main.CurrentTemp}}&emsp; <font color= "red"> Warning!!</font> current temp is higher than specified {{$value.Userminmax.Usermax}} degrees 
+                {{else if gt $value.Userminmax.Usermin $value.Main.CurrentTemp}}&emsp; <font color= "red"> Warning!!</font> current temp is lower than specified {{$value.Userminmax.Usermin}} degrees </li></strong> 
+     {{end}}
+     {{end}}
+<div>
+  <p>
+  <form method="GET" action="/main">     
+      <input type="submit" value="Add more locations"/>
+  </form>
+</p>
+<p>
+  <form method="POST"> 
+  <label>Delete location: </label><input name="delete" type="text" value=""/>     
+  <input type="submit" value="Delete location"/>
+</form></p>
+
+<form method="POST" action="/forecast/">
+ <label>Amount of days: </label><select name="amt_days" type="number" minlength="1">
+    <option value="1" selected="selected">1 day</option>
+    <option value="2">2 days</option>
+    <option value="3">3 days</option>
+    <option value="4">4 days</option>
+    <option value="5">5 days</option>
+    </select> 
+    <label>What time of day do you want to monitor? </label><select name="time" type="text" minlength="1">
+        <option value="15:00:00">15:00</option>
+        <option value="18:00:00" selected="selected">18:00</option>
+        <option value="21:00:00">21:00</option>
+        <option value="00:00:00">00:00</option>
+        <option value="03:00:00">03:00</option>
+        <option value="06:00:00">06:00</option>
+        <option value="09:00:00">09:00</option>
+        <option value="12:00:00">12:00</option>
+        </select> 
+  <input type="submit" value="Get forecasts"/>
+</form></div>
+<p>
+    <form method="GET" action="all/cities"> 
+    <label>Get in JSON format: </label>    
+    <input type="submit" value="Current JSON"/>
+  </form></p>
+
+</div>
+</body>
+</html>

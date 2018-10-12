@@ -1,0 +1,14 @@
+version: '3'
+services: 
+  weatherapplication:
+    build: 
+     context: .
+     dockerfile: Dockerfile2.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/go/src/app
+ # tests:
+ #    build: 
+ #    context: .
+ #    dockerfile: Dockerfile2.dev

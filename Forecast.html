@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+</head>
+
+<body> 
+<h1> Forecast temperatures</h1>
+
+{{range $key, $value := . }}
+{{range $d, $f := $value}}
+{{range $s := $f.Weather}}
+<li><b>The forecast for {{$key}} {{$f.Date}} is: {{$f.Main.Avg_Temp}} degrees celcius &emsp;&emsp;&emsp; <font color= "blue"> Conditions: </font> {{$s.Sky}}</li></b></body>
+{{if (and (eq $f.Userminmax.Usermax 0.00) (eq $f.Userminmax.Usermin 0.00))}}
+{{else if (and (gt $f.Userminmax.Usermin $f.Main.Avg_Temp) (and (eq $f.Userminmax.Usermax 0.00) (gt $f.Userminmax.Usermin 0.00)))}}&emsp; <font color= "red">Warning!! </font> forecasted temp is lower than specified min {{$f.Userminmax.Usermin}} degrees
+{{else if (and (gt $f.Userminmax.Usermin $f.Main.Avg_Temp) (and (eq $f.Userminmax.Usermax 0.00) (gt $f.Userminmax.Usermin -30.00)))}} &emsp; <font color= "red">Warning!! </font> forecasted temp is lower than specified max {{$f.Userminmax.Usermin}} degrees
+{{else if (and (lt $f.Userminmax.Usermin $f.Main.Avg_Temp) (and (eq $f.Userminmax.Usermax 0.00) (gt $f.Userminmax.Usermin 0.00)))}}
+{{else if (and (lt $f.Userminmax.Usermin $f.Main.Avg_Temp) (and (eq $f.Userminmax.Usermax 0.00) (gt $f.Userminmax.Usermin -30.00)))}}
+{{else if lt $f.Userminmax.Usermax $f.Main.Avg_Temp}}&emsp; <font color= "red"> Warning!!</font> forecasted temp is higher than specified max {{$f.Userminmax.Usermax}} degrees 
+{{else if gt $f.Userminmax.Usermin $f.Main.Avg_Temp}}&emsp; <font color= "red"> Warning!!</font> forecasted temp is lower than specified min {{$f.Userminmax.Usermin}} degrees {{end}}
+
+{{end}}
+{{end}}
+<br>
+<br>
+{{end}}
+<div>
+    <p>
+  <form method="GET" action="/current/">     
+      <input type="submit" value="Go back"/>
+  </form>
+  </p>
+  <p>
+        <form method="POST">     
+            <input type="submit" value="Get all available forecasts"/>
+        </form>
+        </p>
+  <p>
+  <form method="GET" action="/main">     
+    <input type="submit" value="Add more locations"/>
+</form>
+</p>
+<p>
+        <form method="GET" action="for/all/days">     
+            <input type="submit" value="Forecast JSON data"/>
+        </form>
+        </p>
+</div>
+</body>
+</html>

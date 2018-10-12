@@ -1,0 +1,15 @@
+{
+	"ImportPath": "Weather_app",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.6.2-5-ge48e440",
+			"Rev": "e48e440e4c92e3251d812f8ce7858944dfa3331c"
+		}
+	]
+}
