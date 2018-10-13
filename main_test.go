@@ -21,7 +21,7 @@ func TestGetForecast(t *testing.T) {
 	if forecastData.Message == "404" || forecastData.Message == "400" {
 		t.Errorf("Forecast weatherdata struct is empty? location not found")
 	}
-	if (forecastData.Days) != days*8 {
+	if (forecastData.Days) != days*7 {
 		t.Errorf("Error in forecast count")
 	}
 }
