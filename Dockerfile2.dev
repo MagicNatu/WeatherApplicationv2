@@ -6,7 +6,7 @@ COPY . .
 RUN go get -d -v github.com/tools/godep
 RUN go test -c -o /out/tests 
 RUN go build -o /out/runme
-CMD ["/out/runme"]
+CMD ["/out/runme", "go", "test -v"]
 
 
 # commands: docker run -p 8080:8080 -v "//c/Users/Public/Weather_app_development:/go/src/app" ae75d2ef6e30
