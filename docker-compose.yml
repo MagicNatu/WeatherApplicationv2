@@ -1,5 +1,9 @@
 version: '3'
 services: 
+  tests:
+    build: 
+     context: .
+     dockerfile: Dockerfile.dev
   weatherapplication:
     build: 
      context: .
@@ -8,7 +12,3 @@ services:
       - "8080:8080"
     volumes:
       - .:/go/src/app
- # tests:
- #    build: 
- #    context: .
- #    dockerfile: Dockerfile2.dev
