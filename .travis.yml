@@ -3,4 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -Dockerfile .
+  - docker build -t nataniel/testcontainer -f Dockerfile.dev .
+
+script:
+  - docker run nataniel/testcontainer /out/app.test
