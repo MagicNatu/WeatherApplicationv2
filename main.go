@@ -30,17 +30,27 @@ var minTemp []float64
 // Defining routes and initializing router
 func main() {
 	jSONforecastMap = map[string][]forecast{} //Initializing map to store JSON data from RESTapi endpoint
+	endPointSlice = []current{}
 	router := mux.NewRouter()
 	router.HandleFunc("/forecast/", getfcData).Methods("POST")
 	router.HandleFunc("/main", firstPage).Methods("POST", "GET")
 	router.HandleFunc("/current/", getCdata).Methods("POST", "GET")
+
+	//Rest api endpoints, added 16.10.2018
+
+	router.HandleFunc("/current2/api/{location}", addLocationzz).Methods("POST")
+	router.HandleFunc("/current2/api/{location}", showLocation).Methods("GET")
+	router.HandleFunc("/current2/api/cities/all", getLocations).Methods("GET")
+	router.HandleFunc("/current2/api/{location}", deleteCities).Methods("DELETE")
+
+	//added 16.10 ends here
 
 	router.HandleFunc("/forecast/{city}/{days}/{min_temp}/{max_temp}", addJSONfcdata).Methods("POST", "GET")
 	router.HandleFunc("/JSONforecast", jsonFCdata).Methods("GET")
 	router.HandleFunc("/forecast/for/all/days", showForecastJSONdata).Methods("GET")
 	router.HandleFunc("/current/all/cities", showCurrentJSONdata).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8000", router))
 }
 
 //the firstPage function represents the initial page when a user navigates to
